@@ -1,8 +1,16 @@
-# React + Vite
+# Todo List con React y Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es un proyecto sencillo de lista de tareas (Todo List) desarrollado con React y Vite. Permite a los usuarios registrar, editar y eliminar tareas.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Registrar tareas
+- Editar tareas
+- Eliminar tareas
+
+## Tecnologías utilizadas
+
+- [React](https://reactjs.org/) - Librería para construir interfaces de usuario.
+- [Vite](https://vitejs.dev/) - Herramienta de desarrollo rápida y ligera.
+- [UUID](https://www.npmjs.com/package/uuid) - Para generar identificadores únicos para las tareas.
+- [ESLint](https://eslint.org/) - Herramienta para identificar y reportar patrones en el código.
