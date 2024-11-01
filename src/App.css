@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -17,7 +19,8 @@ body {
   margin: 0 auto;
 }
 
-.task-form, .task-list {
+.task-form,
+.task-list {
   background-color: #444;
   border-radius: 8px;
   padding: 20px;
@@ -33,7 +36,8 @@ h2 {
   flex-direction: column;
 }
 
-.task-input, .task-description {
+.task-input,
+.task-description {
   margin: 10px 0;
   padding: 10px;
   border: 1px solid #888;
@@ -42,7 +46,8 @@ h2 {
   color: #fff;
 }
 
-.task-input::placeholder, .task-description::placeholder {
+.task-input::placeholder,
+.task-description::placeholder {
   color: #bbb;
 }
 
@@ -67,7 +72,8 @@ h2 {
   margin: 10px 0;
 }
 
-.edit-button, .delete-button {
+.edit-button,
+.delete-button {
   margin: 5px;
   padding: 8px 12px;
   border: none;
@@ -91,4 +97,52 @@ h2 {
 
 .delete-button:hover {
   background-color: #e63939;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #444;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.confirm-button,
+.cancel-button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm-button {
+  background-color: #ff4c4c;
+  color: #fff;
+}
+
+.confirm-button:hover {
+  background-color: #e63939;
+}
+
+.cancel-button {
+  background-color: #ffcc00;
+  color: #333;
+}
+
+.cancel-button:hover {
+  background-color: #e6b800;
 }

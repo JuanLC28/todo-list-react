@@ -1,36 +1,43 @@
-import { useState } from "react";
-import { Tarea } from "./Tarea.jsx";
-import { Formulario } from "./Formulario.jsx";
+import { useEffect, useState } from "react";
+import { Formulario } from "./componentes/Formulario.jsx";
+import { ListaTarea } from "./componentes/ListaTarea.jsx";
+import { ModalEditar } from "./componentes/ModalEditar.jsx";
+import { ModalEliminar } from "./componentes/ModalEliminar.jsx";
 
-import { generateUUID } from "./funciones.js";
+import { v4 as uuidv4 } from "uuid";
 import "./App.css";
 
 export function App() {
-  const [lista, setLista] = useState([]);
+  const [lista, setLista] = useState(() => {
+    let localLista = localStorage.getItem("lista-tareas");
+    return localLista !== null
+      ? JSON.parse(localLista)
+      : [
+          {
+            id: 1,
+            titulo: "Título de ejemplo",
+            descripcion: "Descripción de ejemplo",
+          },
+        ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("lista-tareas", JSON.stringify(lista));
+  }, [lista]);
 
   function registrarTarea({ titulo, descripcion }) {
-    const nuevaLista = [{ id: generateUUID(), titulo, descripcion }, ...lista];
+    const nuevaLista = [{ id: uuidv4(), titulo, descripcion }, ...lista];
     setLista(nuevaLista);
   }
 
-  function editarTarea({ idTask }) {
-    const tarea = lista.find(({ id }) => id === idTask);
-    const tituloNuevo = prompt(
-      "Actualize el título de la tarea!",
-      tarea.titulo
-    );
-    const descripcionNueva = prompt(
-      "Actualize el descripción de la tarea!",
-      tarea.descripcion
-    );
+  function editarTarea({ idTask, titulo, descripcion }) {
+    const tarea = lista.find(({ id }) => id == idTask);
 
-    if (tituloNuevo) tarea.titulo = tituloNuevo;
-    if (descripcionNueva) tarea.descripcion = descripcionNueva;
-
-    if (tituloNuevo === null && descripcionNueva === null) return;
+    tarea.titulo = titulo;
+    tarea.descripcion = descripcion;
 
     const nuevaLista = lista.map((task) => {
-      if (task.id === idTask) return tarea;
+      if (task.id == idTask) return tarea;
       return task;
     });
 
@@ -38,39 +45,19 @@ export function App() {
   }
 
   function eliminarTarea({ idTask }) {
-    const confirmacion = confirm(
-      `¿Estás seguro de eliminar la TAREA con ID ${idTask}?`
-    );
-    if (!confirmacion) return;
-
-    const nuevaLista = lista.filter(({ id }) => id !== idTask);
+    const nuevaLista = lista.filter(({ id }) => id != idTask);
     setLista(nuevaLista);
   }
 
   return (
     <main className="main-container">
-      <section className="task-form">
-        <h2>Nueva tarea</h2>
+      <Formulario registrarTarea={registrarTarea} />
 
-        <Formulario registrarTarea={registrarTarea} />
-      </section>
+      <ListaTarea lista={lista} />
 
-      <section className="task-list">
-        <h2>Lista de las tareas</h2>
+      <ModalEliminar eliminarTarea={eliminarTarea} />
 
-        {lista.map(({ id, titulo, descripcion }) => {
-          return (
-            <Tarea
-              key={id}
-              id={id}
-              titulo={titulo}
-              descripcion={descripcion}
-              editarTarea={editarTarea}
-              eliminarTarea={eliminarTarea}
-            />
-          );
-        })}
-      </section>
+      <ModalEditar editarTarea={editarTarea} />
     </main>
   );
 }
